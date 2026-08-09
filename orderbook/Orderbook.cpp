@@ -248,7 +248,6 @@ public:
       return;
 
     const auto& [order, orderIterator] = orders_.at(orderId);
-    orders_.erase(orderId);
 
     if (order->GetSide() == Side::Sell) {
       auto price = order->GetPrice();
@@ -264,6 +263,7 @@ public:
       if (orders.empty())
         bids_.erase(price);
     }
+    orders_.erase(orderId);
   };
 
   Trades MatchOrder(OrderModify order) {
@@ -283,7 +283,7 @@ public:
     askInfos.reserve(orders_.size());
     bidInfos.reserve(orders_.size());
 
-    auto CreateLevelInfos = [](Price price, const OrderPointers& orders) {
+    auto CreateLevelInfos = [](const Price price, const OrderPointers& orders) {
       return LevelInfo{
           price,
           std::accumulate(orders.begin(), orders.end(), (Quantity)0,
@@ -304,8 +304,17 @@ public:
 };
 
 int main() {
-  Price test = 32;
-  std::cout << test << std::endl;
   std::cout << "Hello World" << std::endl;
+
+  OrderBook ob;
+  OrderId orderId = 1;
+
+  ob.AddOrder(std::make_shared<Order>(OrderType::GoodTillCancel, orderId,
+                                      Side::Buy, 10, 100));
+  std::cout << "Size after add: " << ob.Size() << std::endl;
+
+  ob.CancelOrder(orderId);
+  std::cout << "Size after cancel: " << ob.Size() << std::endl;
+
   return 0;
 }
