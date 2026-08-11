@@ -46,9 +46,9 @@ Optimierte Messungen (nur für Aufgabe 08): `-O2` statt `-g`, ohne Sanitizer.
 
 **Block A — Wertsemantik & Lebensdauer** (das Fundament, nicht überspringen)
 
-- [ ] 01 — Tracer: wann wird kopiert, verschoben, zerstört
+- [x] 01 — Tracer: wann wird kopiert, verschoben, zerstört
 - [ ] 02 — Dangling: vier Wege, Speicher zu verlieren
-- [ ] 11 — Initialisierung: die Fallen *(kann direkt nach 01 kommen)*
+- [ ] 11 — Initialisierung: die Fallen _(kann direkt nach 01 kommen)_
 - [ ] 12 — Copy Elision in C++17
 
 **Block B — Ownership selbst gebaut**
@@ -63,7 +63,7 @@ Optimierte Messungen (nur für Aufgabe 08): `-O2` statt `-g`, ohne Sanitizer.
 - [ ] 07 — Iterator-Invalidierung
 - [ ] 09 — `std::map`: `[]` vs `at` vs `find` vs `emplace` vs `try_emplace`
 - [ ] 10 — Eigene Typen in `set`/`unordered_map`
-- [ ] 08 — Containerwahl & Cache-Lokalität *(optional, aber lehrreich)*
+- [ ] 08 — Containerwahl & Cache-Lokalität _(optional, aber lehrreich)_
 
 **Block D — Robustheit**
 
@@ -79,7 +79,7 @@ Reihenfolge-Empfehlung: 01 → 02 → 11 → 12 → 03 → 05 → 07 → 09 → 
 
 ## 01 — Tracer
 
-**Ziel:** Du siehst zum ersten Mal *tatsächlich*, wann C++ kopiert, verschiebt
+**Ziel:** Du siehst zum ersten Mal _tatsächlich_, wann C++ kopiert, verschiebt
 und zerstört — statt es zu vermuten.
 
 **Aufgabe:**
@@ -220,7 +220,7 @@ nochmal mit `-fno-elide-constructors` bauen und die Ausgaben gegenüberstellen.
 
 - Tabelle im Kommentar: Funktion × Flag → welche Spezialmember liefen.
 - Du kannst begründen, welcher der drei Fälle durch C++17 **garantiert**
-  elidiert wird und welcher nur *optional* optimiert wird.
+  elidiert wird und welcher nur _optional_ optimiert wird.
 - Du kannst erklären, warum (c) schlechter ist als (b).
 
 ---
@@ -390,7 +390,7 @@ Varianten:
 3. mit dem Erase-Remove-Idiom (`std::remove_if` + `erase`)
 
 Teil 3 — Dasselbe für `std::map`: Einträge nach Bedingung löschen mit
-`it = m.erase(it)`. Zeige zusätzlich, dass eine Referenz auf ein *anderes*
+`it = m.erase(it)`. Zeige zusätzlich, dass eine Referenz auf ein _anderes_
 map-Element das `erase` überlebt (bei `vector` nicht).
 
 **Akzeptanzkriterien:**
@@ -462,7 +462,7 @@ es verletzt.
    Hashes sinnvoll (nicht `x + y`).
 3. Baue **absichtlich** einen kaputten Comparator (`<=` statt `<`). Schreibe eine
    Prüffunktion, die über alle Paare/Tripel eines kleinen Testsets die Axiome
-   einer *strict weak ordering* prüft (Irreflexivität, Asymmetrie,
+   einer _strict weak ordering_ prüft (Irreflexivität, Asymmetrie,
    Transitivität, Transitivität der Äquivalenz) und den Bruch meldet.
 
 **Akzeptanzkriterien:**
@@ -483,7 +483,7 @@ es verletzt.
 
 ---
 
-## 08 — Containerwahl & Cache-Lokalität *(optional)*
+## 08 — Containerwahl & Cache-Lokalität _(optional)_
 
 **Ziel:** Warum O-Notation die Praxis nicht entscheidet.
 
@@ -492,7 +492,7 @@ es verletzt.
 - Aufbau: `vector` (mit und ohne `reserve`) vs. `list` vs. `deque`
 - Sequentielles Aufsummieren aller Elemente: `vector` vs. `list`
 - Einfügen in die Mitte: `vector` vs. `list` (inkl. der Kosten, die Mitte zu
-  *finden*)
+  _finden_)
 - 1 000 000 Lookups: `std::map` vs. `std::unordered_map`
 
 **Akzeptanzkriterien:**
