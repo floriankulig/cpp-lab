@@ -47,8 +47,8 @@ Optimierte Messungen (nur für Aufgabe 08): `-O2` statt `-g`, ohne Sanitizer.
 **Block A — Wertsemantik & Lebensdauer** (das Fundament, nicht überspringen)
 
 - [x] 01 — Tracer: wann wird kopiert, verschoben, zerstört
-- [ ] 02 — Dangling: vier Wege, Speicher zu verlieren
-- [ ] 11 — Initialisierung: die Fallen _(kann direkt nach 01 kommen)_
+- [x] 02 — Dangling: vier Wege, Speicher zu verlieren
+- [x] 11 — Initialisierung: die Fallen _(kann direkt nach 01 kommen)_
 - [ ] 12 — Copy Elision in C++17
 
 **Block B — Ownership selbst gebaut**
