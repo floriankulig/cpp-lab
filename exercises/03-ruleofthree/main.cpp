@@ -33,12 +33,16 @@ public:
       p_arr_[i] = value;
     }
   }
-  ~Vector() { delete[] p_arr_; }
+  ~Vector() {
+    delete[] p_arr_;
+    std::cout << "Vector gets destroyed." << std::endl;
+  }
 
   // Copy-Ctor
   Vector(const Vector& other)
       : size_{other.size()}, capacity_{other.size()},
         p_arr_{new T[other.size()]} {
+    std::cout << "Copy-Ctor called." << std::endl;
     for (std::size_t i = 0; i < size_; i++) {
       p_arr_[i] = other[i];
     }
@@ -46,6 +50,10 @@ public:
 
   // Copy-Assign
   Vector& operator=(const Vector& other) {
+    std::cout << "Copy-Assgn-Ctor called." << std::endl;
+    // Denkfrage:
+    // Selbstzuweisungen abfangen, damit bei `delete[] p_arr_;` nicht die
+    // eigenen (gleichzeitig other) Ressourcen gelöscht werden.
     if (this != &other) {
       size_ = other.size();
       capacity_ = other.size();
@@ -60,8 +68,10 @@ public:
     return *this;
   }
 
+  // Denkfrage:
+  // bei `const Vector` nur read-zugriff
   const T& operator[](std::size_t idx) const { return p_arr_[idx]; }
-
+  // Hier auch write Zugriff
   T& operator[](std::size_t idx) { return p_arr_[idx]; }
 
   std::size_t size() const { return size_; }
@@ -97,5 +107,32 @@ public:
 
 int main() {
   std::cout << "Hello World" << std::endl;
+  Vector<int> v1{};
+  std::cout << "Capacity sollte 4 sein: "
+            << (v1.capacity() == 4 ? "true" : "false") << std::endl;
+  for (int i{0}; i < 5; i++) {
+    v1.push_back(i + 1);
+  }
+  std::cout << "Capacity sollte 8 sein: "
+            << (v1.capacity() == 8 ? "true" : "false") << std::endl;
+  for (int i{5}; i < 10; i++) {
+    v1.push_back(i + 1);
+  }
+  std::cout << "Capacity sollte 16 sein: "
+            << (v1.capacity() == 16 ? "true" : "false") << std::endl;
+
+  std::cout << "Should now call copy-ctor, because ref doesn't already exist:"
+            << std::endl;
+  Vector<int> ref = v1;
+  std::cout << "Should now call copy-assign, because v1 already exists:"
+            << std::endl;
+  v1 = ref;
+
+  for (auto& num : v1) {
+    std::cout << num << ", ";
+  }
+  std::cout << "Range-based for funktioniert :)" << std::endl;
+  const Vector<int> v2{2, 69};
+  std::cout << v2[0] << std::endl;
   return 0;
 }
