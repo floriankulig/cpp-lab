@@ -10,6 +10,18 @@ private:
   std::size_t capacity_;
   T* p_arr_;
 
+  // Denkfrage: warum ist `new T[n]` fuer einen echten Vector untauglich?
+  // `new T[n]` koppelt Allokation und Konstruktion zwangsweise: sobald der
+  // Aufruf zurueckkommt, existieren bereits `n` fertig konstruierte
+  // T-Objekte -- unabhaengig davon, wie viele `size_` gerade wirklich
+  // "belegt" sind. Zwei Folgen: (1) T braucht zwingend einen Default-Ctor,
+  // sonst kompiliert es gar nicht. (2) reserve(n) auf einem "echten" Vector
+  // wuerde n Objekte konstruieren, die man danach beim push_back nur noch
+  // ueberschreibt -- unnoetige Arbeit, bei teurem T auch unnoetige
+  // Seiteneffekte. Loesung in Aufgabe 04: Allokation ueber
+  // `::operator new(bytes)` (reserviert Speicher, konstruiert nichts) plus
+  // gezieltes Placement-New nur fuer die Slots, die wirklich gebraucht
+  // werden -> Allokation und Konstruktion sind zwei getrennte Schritte.
   void grow() {
     capacity_ *= 2;
     if (capacity_ == 0) {
@@ -51,9 +63,24 @@ public:
   // Copy-Assign
   Vector& operator=(const Vector& other) {
     std::cout << "Copy-Assgn-Ctor called." << std::endl;
-    // Denkfrage:
-    // Selbstzuweisungen abfangen, damit bei `delete[] p_arr_;` nicht die
-    // eigenen (gleichzeitig other) Ressourcen gelöscht werden.
+    // Denkfrage: Selbstzuweisungen abfangen
+    // Ohne den Check würde `delete[] p_arr_;` bei `v = v;` genau die
+    // Ressourcen loeschen, aus denen `other` gleich kopieren soll (this ==
+    // &other) -> use-after-free beim anschliessenden Kopieren.
+    //
+    // Denkfrage: Copy-and-Swap-Idiom
+    // Alternative zu diesem manuellen delete+new: operator= nimmt den
+    // Parameter BY VALUE (`operator=(Vector other)`), das erzwingt beim
+    // Aufruf schon eine Kopie (bzw. bei rvalues einen Move -> Move-Assign
+    // quasi gratis). Dann `swap(*this, other)`, das nur die drei Member
+    // (size_, capacity_, p_arr_) tauscht -- kein Heap-Zugriff, kann nicht
+    // werfen. Danach laeuft `other`s Destruktor am Funktionsende und gibt
+    // die ALTEN Ressourcen frei.
+    // Geloestes Problem: starke Exception-Garantie. Die einzige Stelle, an
+    // der eine Exception fliegen kann (bad_alloc, T-Copy-Ctor wirft), ist
+    // die Parameterkopie -- passiert komplett BEVOR `*this` angefasst wird.
+    // Wirft es dort, ist `*this` unveraendert. Der swap selbst kann nicht
+    // scheitern, weil dabei nichts alloziert wird.
     if (this != &other) {
       size_ = other.size();
       capacity_ = other.size();

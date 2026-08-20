@@ -53,7 +53,7 @@ Optimierte Messungen (nur für Aufgabe 08): `-O2` statt `-g`, ohne Sanitizer.
 
 **Block B — Ownership selbst gebaut**
 
-- [ ] 03 — `Vector<T>` v1: Rule of Three
+- [x] 03 — `Vector<T>` v1: Rule of Three
 - [ ] 04 — `Vector<T>` v2: Rule of Five, Allokation ≠ Konstruktion
 - [ ] 05 — `UniquePtr<T>`: move-only
 - [ ] 06 — `SharedPtr<T>` + Zyklus mit `weak_ptr` brechen
