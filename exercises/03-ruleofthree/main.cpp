@@ -47,7 +47,7 @@ public:
   }
   ~Vector() {
     delete[] p_arr_;
-    std::cout << "Vector gets destroyed." << std::endl;
+    std::cout << "Vector gets destroyed. Size: " << size_ << std::endl;
   }
 
   // Copy-Ctor
@@ -161,5 +161,9 @@ int main() {
   std::cout << "Range-based for funktioniert :)" << std::endl;
   const Vector<int> v2{2, 69};
   std::cout << v2[0] << std::endl;
+
+  v1 = std::move(v2);
+  v1.push_back(55);
+  std::cout << "after move assign" << std::endl;
   return 0;
 }
