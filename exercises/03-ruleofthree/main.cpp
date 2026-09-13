@@ -5,7 +5,7 @@
 
 template <typename T> class Vector {
 private:
-  const static std::size_t BASE_CAPACITY_ = 4;
+  static constexpr std::size_t BASE_CAPACITY_ = 4;
   std::size_t size_;
   std::size_t capacity_;
   T* p_arr_;
