@@ -42,6 +42,11 @@ public:
   void swap(UniquePtr<T> other) noexcept { std::swap(ptr_, other.ptr_); }
 };
 
+template <typename T, typename... Args>
+UniquePtr<T> MakeUnique(Args&&... args) {
+  return UniquePtr<T>{new T{std::forward<Args>(args)...}};
+}
+
 struct Obj {
   int a{12};
   int b{24};
