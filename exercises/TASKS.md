@@ -55,7 +55,7 @@ Optimierte Messungen (nur für Aufgabe 08): `-O2` statt `-g`, ohne Sanitizer.
 
 - [x] 03 — `Vector<T>` v1: Rule of Three
 - [x] 04 — `Vector<T>` v2: Rule of Five, Allokation ≠ Konstruktion
-- [ ] 05 — `UniquePtr<T>`: move-only
+- [x] 05 — `UniquePtr<T>`: move-only
 - [ ] 06 — `SharedPtr<T>` + Zyklus mit `weak_ptr` brechen
 
 **Block C — Container & Iteratoren im Alltag**
