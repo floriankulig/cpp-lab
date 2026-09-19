@@ -1,3 +1,4 @@
+// import Tracer here as a whole file as we're only using it once anyway
 #include "Tracer.cpp"
 #include "iostream"
 #include <type_traits>
