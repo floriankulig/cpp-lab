@@ -21,7 +21,7 @@ public:
     other.ptr_ = nullptr;
   };
   // Move-Assign
-  UniquePtr<T>& operator=(UniquePtr<T>&& rhs) noexcept {
+  UniquePtr& operator=(UniquePtr<T>&& rhs) noexcept {
     if (this != &rhs) {
       delete ptr_;
       ptr_ = std::exchange(rhs.ptr_, nullptr);
