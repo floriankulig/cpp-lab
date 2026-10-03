@@ -60,7 +60,7 @@ Optimierte Messungen (nur für Aufgabe 08): `-O2` statt `-g`, ohne Sanitizer.
 
 **Block C — Container & Iteratoren im Alltag**
 
-- [ ] 07 — Iterator-Invalidierung
+- [x] 07 — Iterator-Invalidierung
 - [ ] 09 — `std::map`: `[]` vs `at` vs `find` vs `emplace` vs `try_emplace`
 - [ ] 10 — Eigene Typen in `set`/`unordered_map`
 - [ ] 08 — Containerwahl & Cache-Lokalität _(optional, aber lehrreich)_
